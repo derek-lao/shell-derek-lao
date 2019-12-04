@@ -6,5 +6,10 @@
 
 int main(int argc, char * argv[])
 {
+  char * program = argv[0];
+}
 
+int projectMain(int argc, char * what[])
+{
+  
 }

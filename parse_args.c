@@ -1,5 +1,6 @@
 #include "parse_args.h"
 
+// Return an array of pointers to each individual argument in the parameter string, that could be used for execvp()
 char ** parse_args( char * line )//from what I read online, standards conventions is that the args ends with a null argument
 {
   // char * arg = malloc(100 * sizeof(char *));
