@@ -1,4 +1,4 @@
-#include "function.h"
+#include "parse_args.h"
 
 char ** parse_args( char * line )//from what I read online, standards conventions is that the args ends with a null argument
 {
