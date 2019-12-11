@@ -39,7 +39,22 @@ char ** parse_args( char * line )//from what I read online, standards convention
 void execute(char * argv[])
 {
   int * stupidStatus;
-  // printf("hi\n");
+  printf("You are inside the execute function right now\n");
+  if(argv && !strcmp(argv[0], "cd"))
+  {
+    if(!argv[1])
+    {
+      printf("Please cd to a specified directory!\n");
+    }
+    else
+    {
+      printf("this is argv[1]: %s\n", argv[1]);
+      char cwd[1000];
+      // printf("%s\n", getcwd(cwd, 1000));
+      chdir(argv[1]);
+      // printf("%s\n", getcwd(cwd, 1000));
+    }
+  }
   int child = fork();
   // printf("just forked, nothing else\n");
   // printf("pid: %d     parent pid: %d     child: %d\n", getpid(), getppid(), child);
@@ -53,24 +68,7 @@ void execute(char * argv[])
   }
   else if(!child)
   {
-    if(!strcmp(argv[0], "cd"))
-    {
-      if(!argv[1])
-      {
-        printf("Please gimme a directory!\n");
-      }
-      else
-      {
-        char * cwd;
-        printf("%s\n", getcwd(cwd, 1000));
-        chdir(argv[1]);
-        printf("%s\n", getcwd(cwd, 1000));
-      }
-    }
-    else
-    {
-      execvp(argv[0], argv);
-    }
+    execvp(argv[0], argv);
     exit(0);
   }
   else

@@ -52,17 +52,18 @@ static void sighandler(int signo);
 int main()
 {
   printf("running...\n");
-  char * cwd;
+  char cwd[1000];
   // printf("seg fault here??\n");
   // getcwd(cwd, 100);
   // printf("%s\n", getcwd(cwd, 100));
   while(1)
   {
     printf("%s\n", getcwd(cwd, 1000));
+    // printf("cwd is %s\n", getcwd(cwd, 1000));
     char line[100];
     fgets(line, sizeof(line), stdin);
-    char * enemy = strchr(line, (char)'\n');
-    *enemy = '\0';
+    char * lastCharAfterLastArgument = strchr(line, (char)'\n');
+    *lastCharAfterLastArgument = '\0';
     char ** args = parse_args(line);
     if(!strcmp(args[0], "exit"))
     {
