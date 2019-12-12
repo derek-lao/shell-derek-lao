@@ -22,24 +22,36 @@ char ** parse_args( char * line )//from what I read online, standards convention
   return argArray;
 }
 
-//Read a line at a time, parse the line to separate the command from its arguments.
-//It should then fork and exec the command.
-//The parent process should wait until the exec'd program exits and then it should read the next command.
-// void execute(int argc, char * argv[])
-// {
-//   int running = 1;
-//   while(running)
-//   {
-//     char * command = argv[0];
-//     execvp(argv[0], argv);
-//     running = 0;
-//   }
-// }
+char ** cmdsep(char *** arg)
+{
+  int argIndex = 0;
+  while((* arg)[argIndex])
+  {
+    // printf("argument: %lu\n", (* arg) + argIndex);
+    if(!strcmp(";", (* arg)[argIndex]))
+    {
+      // printf("argument inside if statement: %lu\n", (* arg) + argIndex);
+      (* arg)[argIndex] = NULL;
+      char ** temp = (* arg);
+      * arg = (*arg) + argIndex + 1;
+      // printf("what we are going to return: %lu\n", temp);
+      // printf("what the new arg is: %lu\n", * arg);
+      return temp;
+    }
+    else
+    {
+      argIndex ++;
+    }
+  }
+  // printf("exited because argument is null\n");
+  char ** temp = (* arg);
+  * arg = (*arg) + argIndex + 1;
+  return temp;
+}
 
 void execute(char * argv[])
 {
   int * stupidStatus;
-  // printf("You are inside the execute function right now\n");
   if(argv && !strcmp(argv[0], "cd"))
   {
     if(!argv[1])
@@ -48,32 +60,25 @@ void execute(char * argv[])
     }
     else
     {
-      // printf("this is argv[1]: %s\n", argv[1]);
       char cwd[1000];
-      // printf("%s\n", getcwd(cwd, 1000));
       chdir(argv[1]);
-      // printf("%s\n", getcwd(cwd, 1000));
     }
-  }
-  int child = fork();
-  // printf("just forked, nothing else\n");
-  // printf("pid: %d     parent pid: %d     child: %d\n", getpid(), getppid(), child);
-  if(child > 0)
-  {
-    // printf("just forked, about to wait\n");
-    // printf("while waiting:\npid: %d     parent pid: %d     child: %d\n", getpid(), getppid(), child);
-    wait(stupidStatus);
-    // printf("just finished waiting\n");
-    // printf("pid: %d     parent pid: %d     child: %d\n", getpid(), getppid(), child);
-  }
-  else if(!child)
-  {
-    execvp(argv[0], argv);
-    exit(0);
   }
   else
   {
-    printf("creation of a child was unsuccessful\n");
+    int child = fork();
+    if(child > 0)
+    {
+      wait(stupidStatus);
+    }
+    else if(!child)
+    {
+      execvp(argv[0], argv);
+      exit(0);
+    }
+    else
+    {
+      printf("creation of a child was unsuccessful\n");
+    }
   }
-  // running = 0;
 }
