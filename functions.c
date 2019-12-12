@@ -39,7 +39,7 @@ char ** parse_args( char * line )//from what I read online, standards convention
 void execute(char * argv[])
 {
   int * stupidStatus;
-  printf("You are inside the execute function right now\n");
+  // printf("You are inside the execute function right now\n");
   if(argv && !strcmp(argv[0], "cd"))
   {
     if(!argv[1])
@@ -48,7 +48,7 @@ void execute(char * argv[])
     }
     else
     {
-      printf("this is argv[1]: %s\n", argv[1]);
+      // printf("this is argv[1]: %s\n", argv[1]);
       char cwd[1000];
       // printf("%s\n", getcwd(cwd, 1000));
       chdir(argv[1]);
