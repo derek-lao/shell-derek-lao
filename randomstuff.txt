@@ -1,0 +1,20 @@
+total 372
+drwxr-xr-x+ 1 durick durick      0 Dec 12 03:19 .
+drwxrwxr-x+ 1 durick durick      0 Dec 11 09:27 ..
+drwxr-xr-x+ 1 durick durick      0 Dec 12 01:23 .git
+-rwxr-xr-x  1 durick durick    482 Dec  4 01:13 .gitignore
+-rwxr-xr-x  1 durick durick 160060 Dec  5 10:44 a.exe
+-rwxr-xr-x  1 durick durick   1363 Dec 10 17:51 bash.exe.stackdump
+-rwxr-xr-x  1 durick durick   1918 Dec 12 00:47 functions.c
+-rwxr-xr-x  1 durick durick    490 Dec 11 23:55 functions.h
+-rw-r--r--  1 durick durick   1933 Dec 12 00:48 functions.o
+-rwxr-xr-x  1 durick durick   1002 Dec 12 01:22 main.c
+-rw-r--r--  1 durick durick   1493 Dec 12 01:22 main.o
+-rwxr-xr-x  1 durick durick    219 Dec  8 22:58 makefile
+drwxr-xr-x+ 1 durick durick      0 Dec  8 23:37 parse_args-derek-lao
+-rwxr-xr-x  1 durick durick 163717 Dec 12 01:22 parsetest.exe
+-rwxr-xr-x  1 durick durick   1018 Dec 12 01:19 parsetest.exe.stackdump
+drwxr-xr-x+ 1 durick durick      0 Dec  9 00:25 processTesting.c
+-rwxr-xr-x  1 durick durick      0 Dec 12 03:20 randomstuff.txt
+-rwxr-xr-x  1 durick durick     19 Dec  4 08:27 README.md
+-rw-r--r--  1 durick durick      0 Dec  9 02:00 s
