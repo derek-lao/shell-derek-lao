@@ -3,7 +3,6 @@
 //Return an array of pointers to each individual argument in the parameter string, that could be used for execvp()
 char ** parse_args( char * line )//from what I read online, standards conventions is that the args ends with a null argument
 {
-  // char * arg = malloc(100 * sizeof(char *));
   int argIndex;
   char ** argArray = malloc(100 * sizeof(char **));//memory is allocated
   for(argIndex = 0 ; argIndex < 100 ; argIndex ++)
@@ -27,15 +26,11 @@ char ** cmdsep(char *** arg)
   int argIndex = 0;
   while((* arg)[argIndex])
   {
-    // printf("argument: %lu\n", (* arg) + argIndex);
     if(!strcmp(";", (* arg)[argIndex]))
     {
-      // printf("argument inside if statement: %lu\n", (* arg) + argIndex);
       (* arg)[argIndex] = NULL;
       char ** temp = (* arg);
       * arg = (*arg) + argIndex + 1;
-      // printf("what we are going to return: %lu\n", temp);
-      // printf("what the new arg is: %lu\n", * arg);
       return temp;
     }
     else
@@ -43,9 +38,8 @@ char ** cmdsep(char *** arg)
       argIndex ++;
     }
   }
-  // printf("exited because argument is null\n");
   char ** temp = (* arg);
-  * arg = (*arg) + argIndex + 1;
+  * arg = (*arg) + argIndex;
   return temp;
 }
 
@@ -56,7 +50,7 @@ void execute(char * argv[])
   {
     if(!argv[1])
     {
-      printf("Please cd to a specified directory!\n");
+      printf("Please enter a specified directory!\n");
     }
     else
     {
@@ -73,6 +67,24 @@ void execute(char * argv[])
     }
     else if(!child)
     {
+      int argIndex = 0;
+      // while(argv[argIndex])
+      // {
+      //   if(!strcmp(argv[argIndex], "<"))
+      //   {
+      //
+      //   }
+      //   else if(!strcmp(argv[argIndex], ">"))
+      //   {
+      //     // int fileDescriptor = open(argv[argIndex + 1], O_WRONLY, 0644);
+      //     // int numberOfBytes = write(fileDescriptor, stdout, 10000);
+      //     // close(fileDescriptor);
+      //     // execvp(argv[argIndex - 1], argv);
+      //     // exit(0);
+      //   }
+      //   printf("argIndex: %d\n", argIndex);
+      //   argIndex ++;
+      // }
       execvp(argv[0], argv);
       exit(0);
     }

@@ -5,6 +5,7 @@
 #include <string.h>
 #include <signal.h>
 #include <unistd.h>
+#include <fcntl.h>
 #include <sys/wait.h>
 
 char ** parse_args( char * line );//Return an array of pointers to each individual argument in the parameter string, that could be used for execvp()

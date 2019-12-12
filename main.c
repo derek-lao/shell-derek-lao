@@ -21,23 +21,24 @@ int main()
     *lastCharAfterLastArgument = '\0';
     char ** args = parse_args(line);
     char ** commands = malloc(100 * sizeof(char *));
+    char ** temp1 = args;
+    char ** temp2 = commands;
     while(args[0])
     {
-      // printf("the argument is: %s\n", *args);
-      // printf("args: %lu     commands: %lu\n", args, commands);
       commands = cmdsep(&args);
-      // printf("commands[0] in the while loop is: %lu\n", commands[0]);
       if(!strcmp(commands[0], "exit"))
       {
         break;
       }
       execute(commands);
     }
-    // printf("commands[0] is: %lu\n", commands[0]);
     if(*commands && !strcmp(commands[0], "exit"))
     {
       break;
     }
+    free(temp1);
+    free(temp2);
+    printf("\n");
   }
   return 0;
 }
