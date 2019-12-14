@@ -68,24 +68,46 @@ void execute(char * argv[])
     else if(!child)
     {
       int argIndex = 0;
-      // while(argv[argIndex])
-      // {
-      //   if(!strcmp(argv[argIndex], "<"))
-      //   {
-      //
-      //   }
-      //   else if(!strcmp(argv[argIndex], ">"))
-      //   {
-      //     // int fileDescriptor = open(argv[argIndex + 1], O_WRONLY, 0644);
-      //     // int numberOfBytes = write(fileDescriptor, stdout, 10000);
-      //     // close(fileDescriptor);
-      //     // execvp(argv[argIndex - 1], argv);
-      //     // exit(0);
-      //   }
-      //   printf("argIndex: %d\n", argIndex);
-      //   argIndex ++;
-      // }
+      while(argv[argIndex])
+      {
+        printf("\n");
+        printf("argIndex: %d\n", argIndex);
+        printf("argv[%d] is %s\n", argIndex, argv[argIndex]);
+        printf("argv[%d] is %s\n", argIndex + 1, argv[argIndex + 1]);
+        printf("strcmp(argv[argIndex]), \"<\": %d\n", strcmp(argv[argIndex], "<"));
+        printf("strcmp(argv[argIndex]), \">\": %d\n", strcmp(argv[argIndex], ">"));
+        if(!strcmp(argv[argIndex], ">"))
+        {
+          printf("in here?\n");
+          int fileDescriptor = open(argv[argIndex + 1], O_WRONLY, 0644);
+          // printf("fileDescriptor: %d\n", fileDescriptor);
+          // printf("argv[argIndex + 1] is: %s\n", argv[argIndex + 1]);
+          // int numberOfBytes = write(fileDescriptor, stdout, 10000);
+          // printf("numberOfBytes: %d\n", numberOfBytes);
+          // close(fileDescriptor);
+          // argv[argIndex] = NULL;//this is faulty
+          // printf("argv[argIndex - 1]: %s\n", argv[argIndex - 1]);
+          // printf("argv[argIndex]: %s\n", argv[argIndex]);
+          // execvp(argv[argIndex - 1], argv);
+          // exit(0);
+        }
+        else if(!strcmp(argv[argIndex], "<"))
+        {
+
+        }
+        argIndex ++;
+        if(!argv[argIndex])
+        {
+          printf("will exit loop in the next iteration\n\n");
+        }
+      }
+      printf("loop exited!\n");
+      printf("argIndex now: %d\n", argIndex);
+      printf("what is argv[0]?: %s\n", argv[0]);
       execvp(argv[0], argv);
+      // int errorMessage = execvp(argv[0], argv);
+      // printf("this is errorMessage: %d\n", execvp(argv[0], argv));
+      printf("does anything happen after this? \n");
       exit(0);
     }
     else
