@@ -1,14 +1,46 @@
 # shell-derek-lao
 
-From commit "e034356a159ddfa4a592c59849d6e62c32b8f9c7"
-There is a major bug, probably in gcc.
+Features:
+	Forks and executes commands
+	Parses multiple commands on one line
+	Redirects using >, <
 
-While including line 82 of functions.c, with lines 28-30 and lines 32-34 of main.c commented out, the program exits after any call (I tried ls).
+Attempted:
+	The following did not end up working, but have been left in the code, commented out:
+  
+  
+Bugs:
+  Does not work for multiple semi colons
+  Does not work when semicolons are not separated by a space from their arguments
+  Pipes does not work yet
+  cd without any following arguments does not work
+  
+  
+Files & Function Headers:
+functions.c
+	Handles all functions
+	/*======== char ** parse_args() ==========
+	Inputs:  char *line
+	Returns: Array of arguments (in the form of strings) parsed from line.
+  
+	====================*/
 
-When I add in line 28 and/or line 32 in main.c while keeping line 82 of functions.c in, I receive a segmentation fault in the program after a call.
+	/*======== char ** cmdsep() ==========
+	Inputs:  char *** arg 
+	Returns: The beginning of the array of arguments pointed to by arg
 
-When I add in line lines 29-30 in main.c such that I will now have lines 28-30, and 32 in main.c and line 82 in functions.c, the program will exit after one call. When I add lines 33 and 34 in main.c such that now lines 28-30 and lines 32-34 of main.c and line 82 of functions.c are active, the program runs without exiting or receiving any errors.
+	Takes in a pointer (arg) to an array of arguments (each argument a string).
+  Finds the first occurence of the argument ";", replaces it with a NULL.
+  Arg points to the memory one index after the NULL that was just created.
+	====================*/
 
-I did some further testing, and found that as long as I do any printing of the "commands" pointer XOR the "args" pointer, before the execute function within the while loop is called, the program will run without any visible problems.
+	/*======== void execute() ==========
+	Inputs:  char * argv[] 
+	Returns: n/a
 
-I realize that when I use scanf(thing, "%s", thing);, for some reason, the shell does not crash. This must be a bug in the code or a bug in cygwin... wow...
+	Checks for cd in the arguments and executes. Checks for < and > to use redirection.
+  Checks for | to use pipes. Executes arguments.
+	====================*/
+
+main.c
+	The main code that keeps the shell going, takes care of "exit" code
