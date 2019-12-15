@@ -88,6 +88,19 @@ void redirect(char * argv[])
     if(!strcmp(argv[argIndex], "<"))
     {
       redirectCounter ++;
+    }
+    if(!strcmp(argv[argIndex], ">"))
+    {
+      redirectCounter ++;
+    }
+    argIndex ++;
+  }
+  argIndex = 0;
+  while(argv[argIndex])
+  {
+    if(!strcmp(argv[argIndex], "<"))
+    {
+      redirectCounter ++;
       int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
       if(fileDescriptor < 0)
       {
