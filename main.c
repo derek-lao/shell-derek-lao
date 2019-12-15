@@ -26,8 +26,8 @@ int main()
     while(args[0])
     {
       commands = cmdsep(&args);
-      char thing[1];
-      scanf(thing, "%s", thing);
+      // char thing[1];
+      // scanf(thing, "%s", thing);
       //this line is BS to allow the redirection code to work
       if(!strcmp(commands[0], "exit"))
       {
