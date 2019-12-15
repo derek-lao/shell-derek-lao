@@ -33,6 +33,7 @@ char ** cmdsep(char *** arg)
       * arg = (*arg) + argIndex + 1;
       return temp;
     }
+    // else if(!strncmp(";;""))
     else
     {
       argIndex ++;
@@ -99,26 +100,16 @@ void execute(char * argv[])
           int temp = io;//makes temp STDIN_FILENO;
           dup2(fileDescriptor, io);
           close(fileDescriptor);
-          argv[argIndex] = ";";//this is faulty
+          argv[argIndex] = ";";
           argv[argIndex + 1] = argv[argIndex - 1];
           cmdsep(&argv);
           execute(argv);
-          dup2(temp, io);//make input output back into STDOUT_FILENO
+          dup2(temp, io);//make input output back into STDIN_FILENO
           exit(0);
         }
         argIndex ++;
-        // if(!argv[argIndex])
-        // {
-        //   printf("will exit loop in the next iteration\n\n");
-        // }
       }
-      // printf("loop exited!\n");
-      // printf("argIndex now: %d\n", argIndex);
-      // printf("what is argv[0]?: %s\n", argv[0]);
       execvp(argv[0], argv);
-      // int errorMessage = execvp(argv[0], argv);
-      // printf("this is errorMessage: %d\n", execvp(argv[0], argv));
-      // printf("does anything happen after this? \n");
       exit(0);
     }
     else
