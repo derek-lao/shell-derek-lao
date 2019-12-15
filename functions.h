@@ -13,3 +13,5 @@ char ** parse_args( char * line );//Return an array of pointers to each individu
 char ** cmdsep(char *** arg);
 void execute(char * argv[]);
 //The parent process should wait until the exec'd program exits and then it should read the next command.
+
+void redirect(char * argv[]);

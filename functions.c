@@ -68,47 +68,7 @@ void execute(char * argv[])
     }
     else if(!child)
     {
-      int argIndex = 0;
-      while(argv[argIndex])
-      {
-        if(!strcmp(argv[argIndex], ">"))
-        {
-          int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
-          if(fileDescriptor < 0)
-          {
-            fileDescriptor = open(argv[argIndex + 1], O_RDWR);
-          }
-          int io = STDOUT_FILENO;
-          int temp = io;//makes temp STDOUT_FILENO;
-          dup2(fileDescriptor, io);
-          close(fileDescriptor);
-          argv[argIndex] = ";";//this is faulty
-          argv[argIndex + 1] = argv[argIndex - 1];
-          cmdsep(&argv);
-          execute(argv);
-          dup2(temp, io);//make input output back into STDOUT_FILENO
-          exit(0);
-        }
-        else if(!strcmp(argv[argIndex], "<"))
-        {
-          int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
-          if(fileDescriptor < 0)
-          {
-            fileDescriptor = open(argv[argIndex + 1], O_RDWR);
-          }
-          int io = STDIN_FILENO;
-          int temp = io;//makes temp STDIN_FILENO;
-          dup2(fileDescriptor, io);
-          close(fileDescriptor);
-          argv[argIndex] = ";";
-          argv[argIndex + 1] = argv[argIndex - 1];
-          cmdsep(&argv);
-          execute(argv);
-          dup2(temp, io);//make input output back into STDIN_FILENO
-          exit(0);
-        }
-        argIndex ++;
-      }
+
       execvp(argv[0], argv);
       exit(0);
     }
@@ -116,5 +76,53 @@ void execute(char * argv[])
     {
       printf("creation of a child was unsuccessful\n");
     }
+  }
+}
+
+void redirect(char * argv[])
+{
+  int argIndex = 0;
+  int redirectCounter = 0;
+  while(argv[argIndex])
+  {
+    if(!strcmp(argv[argIndex], "<"))
+    {
+      redirectCounter ++;
+      int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+      if(fileDescriptor < 0)
+      {
+        fileDescriptor = open(argv[argIndex + 1], O_RDWR);
+      }
+      int io = STDIN_FILENO;
+      int temp = io;//makes temp STDIN_FILENO;
+      dup2(fileDescriptor, io);
+      close(fileDescriptor);
+      argv[argIndex] = ";";
+      argv[argIndex + 1] = argv[argIndex - 1];
+      cmdsep(&argv);
+      execute(argv);
+      dup2(temp, io);//make input output back into STDIN_FILENO
+      exit(0);
+    }
+    if(!strcmp(argv[argIndex], ">"))
+    {
+      redirectCounter ++;
+      int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+      if(fileDescriptor < 0)
+      {
+        fileDescriptor = open(argv[argIndex + 1], O_RDWR);
+      }
+      int io = STDOUT_FILENO;
+      int temp = io;//makes temp STDOUT_FILENO;
+      dup2(fileDescriptor, io);
+      close(fileDescriptor);
+      argv[argIndex] = ";";//this is faulty
+      argv[argIndex + 1] = argv[argIndex - 1];
+      cmdsep(&argv);
+      execute(argv);
+      dup2(temp, io);//make input output back into STDOUT_FILENO
+      exit(0);
+    }
+    argIndex ++;
   }
 }

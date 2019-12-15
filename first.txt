@@ -1,1 +1,16 @@
-
+a.exe
+filesLibrary
+first.txt
+functions.c
+functions.h
+functions.o
+main.c
+main.o
+makefile
+processTesting.c
+README.md
+second.txt
+shelltest
+shelltest.exe
+third.txt
+wholist
