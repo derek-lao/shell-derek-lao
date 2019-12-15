@@ -25,19 +25,17 @@ int main()
     char ** temp2 = commands;
     while(args[0])
     {
-      printf("about to do stuff\n");
-      printf("commands pointer before cmdsep: %ld\n", commands);
-      printf("args pointer before cmdsep: %ld\n", args);
       commands = cmdsep(&args);
-      printf("cmdsep called!!\n");
-      printf("commands pointer after cmdsep: %ld\n", commands);
-      printf("args pointer after cmdsep: %ld\n", args);
+      char thing[1];
+      scanf(thing, "%s", thing);
+      //this line is BS to allow the redirection code to work
       if(!strcmp(commands[0], "exit"))
       {
         break;
       }
       execute(commands);
-      printf("done executing!\n");
+
+      // printf("done executing!\n");
     }
     if(*commands && !strcmp(commands[0], "exit"))
     {
