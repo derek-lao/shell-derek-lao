@@ -22,16 +22,16 @@ functions.c
 	/*======== char ** parse_args() ==========
 	Inputs:  char *line
 	Returns: Array of arguments (in the form of strings) parsed from line.
-  
 	====================*/
+
 
 	/*======== char ** cmdsep() ==========
 	Inputs:  char *** arg 
 	Returns: The beginning of the array of arguments pointed to by arg
 
 	Takes in a pointer (arg) to an array of arguments (each argument a string).
-  Finds the first occurence of the argument ";", replaces it with a NULL.
-  Arg points to the memory one index after the NULL that was just created.
+  	Finds the first occurence of the argument ";", replaces it with a NULL.
+ 	 Arg points to the memory one index after the NULL that was just created.
 	====================*/
 
 	/*======== void execute() ==========
@@ -39,7 +39,7 @@ functions.c
 	Returns: n/a
 
 	Checks for cd in the arguments and executes. Checks for < and > to use redirection.
-  Checks for | to use pipes. Executes arguments.
+ 	Checks for | to use pipes. Executes arguments.
 	====================*/
 
 main.c
