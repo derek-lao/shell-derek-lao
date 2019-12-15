@@ -1,0 +1,3 @@
+ 01:21:13 up 4 days,  8:27,  1 user,  load average: 1.96, 2.00, 2.00
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+dlao00   pts/0    173.52.245.136   21:12    0.00s  0.23s  0.00s ./shelltest
