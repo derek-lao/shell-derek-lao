@@ -98,17 +98,17 @@ void execute(char * argv[])
         else if(!strcmp(argv[argIndex], "<"))
         {
           printf("in here?\n");
-          // int fileDescriptor = open(argv[argIndex + 1], O_RDONLY, 0644);
-          // printf("fileDescriptor: %d\n", fileDescriptor);
-          // printf("argv[argIndex + 1] is: %s\n", argv[argIndex + 1]);
-          // int numberOfBytes = read(fileDescriptor, argv[argIndex - 1], 10000);
-          // printf("numberOfBytes: %d\n", numberOfBytes);
-          // close(fileDescriptor);
-          // argv[argIndex] = NULL;//this is faulty
-          // printf("argv[argIndex - 1]: %s\n", argv[argIndex - 1]);
-          // printf("argv[argIndex]: %s\n", argv[argIndex]);
-          // execvp(argv[argIndex - 1], argv);
-          // exit(0);
+          int fileDescriptor = open(argv[argIndex + 1], O_RDONLY, 0644);
+          printf("fileDescriptor: %d\n", fileDescriptor);
+          printf("argv[argIndex + 1] is: %s\n", argv[argIndex + 1]);
+          int numberOfBytes = read(fileDescriptor, argv[argIndex - 1], 10000);
+          printf("numberOfBytes: %d\n", numberOfBytes);
+          close(fileDescriptor);
+          argv[argIndex] = NULL;//this is faulty
+          printf("argv[argIndex - 1]: %s\n", argv[argIndex - 1]);
+          printf("argv[argIndex]: %s\n", argv[argIndex]);
+          execvp(argv[argIndex - 1], argv);
+          exit(0);
         }
         argIndex ++;
         // if(!argv[argIndex])
