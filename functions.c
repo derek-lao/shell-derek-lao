@@ -72,28 +72,38 @@ void execute(char * argv[])
       {
         if(!strcmp(argv[argIndex], ">"))
         {
-          int fileDescriptor = open(argv[argIndex + 1], O_WRONLY, 0644);
-          int numberOfBytes = write(fileDescriptor, stdout, 10000);
+          int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+          if(fileDescriptor < 0)
+          {
+            fileDescriptor = open(argv[argIndex + 1], O_RDWR);
+          }
+          int io = STDOUT_FILENO;
+          int temp = io;//makes temp STDOUT_FILENO;
+          dup2(fileDescriptor, io);
           close(fileDescriptor);
           argv[argIndex] = ";";//this is faulty
           argv[argIndex + 1] = argv[argIndex - 1];
           cmdsep(&argv);
           execute(argv);
+          dup2(temp, io);//make input output back into STDOUT_FILENO
           exit(0);
         }
         else if(!strcmp(argv[argIndex], "<"))
         {
-          printf("in here?\n");
-          int fileDescriptor = open(argv[argIndex + 1], O_RDONLY, 0644);
-          printf("fileDescriptor: %d\n", fileDescriptor);
-          printf("argv[argIndex + 1] is: %s\n", argv[argIndex + 1]);
-          int numberOfBytes = read(fileDescriptor, argv[argIndex - 1], 10000);
-          printf("numberOfBytes: %d\n", numberOfBytes);
+          int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+          if(fileDescriptor < 0)
+          {
+            fileDescriptor = open(argv[argIndex + 1], O_RDWR);
+          }
+          int io = STDIN_FILENO;
+          int temp = io;//makes temp STDIN_FILENO;
+          dup2(fileDescriptor, io);
           close(fileDescriptor);
           argv[argIndex] = ";";//this is faulty
           argv[argIndex + 1] = argv[argIndex - 1];
           cmdsep(&argv);
           execute(argv);
+          dup2(temp, io);//make input output back into STDOUT_FILENO
           exit(0);
         }
         argIndex ++;
