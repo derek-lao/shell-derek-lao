@@ -70,29 +70,15 @@ void execute(char * argv[])
       int argIndex = 0;
       while(argv[argIndex])
       {
-        printf("we have begun!! 888888888888888888888888888888888888888888888888888\n");
-        printf("argv we are on right now: %ld\n", argv + argIndex);
         if(!strcmp(argv[argIndex], ">"))
         {
-          printf("in here?\n");
           int fileDescriptor = open(argv[argIndex + 1], O_WRONLY, 0644);
-          // printf("fileDescriptor: %d\n", fileDescriptor);
-          // printf("argv[argIndex + 1] is: %s\n", argv[argIndex + 1]);
-          printf("argv[argIndex - 1] is: %ld\n", argv[argIndex - 1]);
-          printf("argv[argIndex] is: %ld\n", argv[argIndex]);
-          printf("argv[argIndex + 1] is: %ld\n", argv[argIndex + 1]);
           int numberOfBytes = write(fileDescriptor, stdout, 10000);
-          printf("numberOfBytes: %d\n", numberOfBytes);
           close(fileDescriptor);
           argv[argIndex] = ";";//this is faulty
           argv[argIndex + 1] = argv[argIndex - 1];
-          printf("argv[argIndex + 1]: %s\n", argv[argIndex + 1]);
-          printf("argv[argIndex]: %s\n", argv[argIndex]);
-          printf("argv before cmdsep: %ld\n", argv);
           cmdsep(&argv);
-          printf("argv after cmdsep: %ld\n", argv);
           execute(argv);
-          printf("this thing?\n");
           exit(0);
         }
         else if(!strcmp(argv[argIndex], "<"))
@@ -104,10 +90,10 @@ void execute(char * argv[])
           int numberOfBytes = read(fileDescriptor, argv[argIndex - 1], 10000);
           printf("numberOfBytes: %d\n", numberOfBytes);
           close(fileDescriptor);
-          argv[argIndex] = NULL;//this is faulty
-          printf("argv[argIndex - 1]: %s\n", argv[argIndex - 1]);
-          printf("argv[argIndex]: %s\n", argv[argIndex]);
-          execvp(argv[argIndex - 1], argv);
+          argv[argIndex] = ";";//this is faulty
+          argv[argIndex + 1] = argv[argIndex - 1];
+          cmdsep(&argv);
+          execute(argv);
           exit(0);
         }
         argIndex ++;
