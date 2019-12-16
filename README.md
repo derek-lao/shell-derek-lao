@@ -21,7 +21,7 @@ Bugs:
 -------------------------------------------------
 Files & Function Headers:
 -----------------------------------------------------------
-_functions.c_
+__functions.c__
 * Handles all functions
 
 
@@ -45,5 +45,5 @@ _functions.c_
 * Checks for cd in the arguments and executes. Checks for < and > to use redirection.
 * Checks for | to use pipes. Executes arguments.
 
-_main.c_
+__main.c__
 * The main code that keeps the shell going, takes care of "exit" code
