@@ -120,7 +120,7 @@ void redirectRun(char *** argv)
   {
     if(inputRedirectIndex < 100)
     {
-      int fileDescriptor = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+      int fileDescriptor = open((*argv)[inputRedirectIndex + 1], O_RDWR, 0644);
       if(fileDescriptor < 0)
       {
         // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
@@ -162,7 +162,7 @@ void redirectRun(char *** argv)
   //multi-redirect
   else if(redirectCounter == 2)
   {
-    int fileDescriptor1 = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+    int fileDescriptor1 = open((*argv)[inputRedirectIndex + 1], O_RDWR, 0644);
     if(fileDescriptor1 < 0)
     {
       // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
