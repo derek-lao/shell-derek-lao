@@ -121,9 +121,10 @@ void redirectRun(char *** argv)
 
   if(redirectCounter == 1)
   {
-    printf("inside check for redirectCounter = 1");
+    printf("inside check for redirectCounter = 1\n");
     if(inputRedirectIndex < 100)
     {
+      printf("inside check for inputRedirectIndex < 100 while redirectCounter = 1\n");
       int fileDescriptor = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
       if(fileDescriptor < 0)
       {
@@ -142,6 +143,7 @@ void redirectRun(char *** argv)
     }
     else if(outputRedirectIndex < 100)
     {
+      printf("inside check for outputRedirectIndex < 100 while redirectCounter = 1\n");
       int fileDescriptor = open((*argv)[outputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
       if(fileDescriptor < 0)
       {
@@ -162,6 +164,7 @@ void redirectRun(char *** argv)
   //multi-redirect
   else if(redirectCounter == 2)
   {
+    printf("inside check for redirectCounter = 1\n");
     int fileDescriptor1 = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
     if(fileDescriptor1 < 0)
     {
