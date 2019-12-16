@@ -180,8 +180,6 @@ void redirectRun(char *** argv)
       execute(*argv);
       close(fileDescriptor1);
       close(fileDescriptor2);
-      dup2(fileDescriptor1, io1);
-      dup2(fileDescriptor2, io2);
       *argv = (*argv) + outputRedirectIndex + 1;
     }
   }
