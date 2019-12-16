@@ -122,11 +122,7 @@ void redirectRun(char *** argv)
       int fileDescriptor = open((*argv)[inputRedirectIndex + 1], O_RDWR, 0644);
       if(fileDescriptor < 0)
       {
-        // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
-        printf("failed somehow: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
-        printf("inputRedirectIndex in fail condition: %d\n", inputRedirectIndex);
-        printf("(*argv)[inputRedirectIndex]: %s\n", (*argv)[inputRedirectIndex]);
-        printf("(*argv)[inputRedirectIndex + 1]: %s\n", (*argv)[inputRedirectIndex + 1]);
+        printf("derek's shell: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
       }
       else //if fileDescriptor is greater than or equal to 0, meaning file exists
       {
@@ -164,8 +160,7 @@ void redirectRun(char *** argv)
     int fileDescriptor1 = open((*argv)[inputRedirectIndex + 1], O_RDWR, 0644);
     if(fileDescriptor1 < 0)
     {
-      // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
-      printf("failed!!: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
+      printf("derek's shell: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
     }
     else//if filedescriptor1 is greater than or equal to 0;
     {
@@ -178,6 +173,8 @@ void redirectRun(char *** argv)
       int io2 = STDIN_FILENO;
       int temp1 = dup(io1);
       int temp2 = dup(io2);
+      dup2(fileDescriptor1, io1);
+      dup2(fileDescriptor2, io2);
       (*argv)[inputRedirectIndex] = NULL;
       (*argv)[outputRedirectIndex] = NULL;
       execute(*argv);
