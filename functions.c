@@ -103,7 +103,7 @@ void execute(char * argv[])
     }
     // printf("got up to here!!\n");
   }
-  // printf("end of first execute call\n");
+  // printf("end of first execute\n");
 }
 
 void redirectRun(char *** argv)
