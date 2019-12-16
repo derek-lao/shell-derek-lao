@@ -96,6 +96,7 @@ void execute(char * argv[])
 
 void redirectRun(char *** argv)
 {
+  printf("redirectRun called\n");
   int argIndex = 0;
   int redirectCounter = 0;
   int inputRedirectIndex = 1000;
@@ -103,6 +104,7 @@ void redirectRun(char *** argv)
   //loop to count the redirects
   while((*argv)[argIndex])
   {
+    printf("in while loop that alters inputRedirectIndex and outputRedirectIndex\n");
     if(!strcmp((*argv)[argIndex], "<"))
     {
       inputRedirectIndex = argIndex;
@@ -115,9 +117,11 @@ void redirectRun(char *** argv)
     }
     argIndex ++;
   }
+  printf("exited aforementioned while loop\n");
 
-  if(redirectCounter = 1)
+  if(redirectCounter == 1)
   {
+    printf("inside check for redirectCounter = 1");
     if(inputRedirectIndex < 100)
     {
       int fileDescriptor = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
@@ -156,7 +160,7 @@ void redirectRun(char *** argv)
   }
 
   //multi-redirect
-  else if(redirectCounter = 2)
+  else if(redirectCounter == 2)
   {
     int fileDescriptor1 = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
     if(fileDescriptor1 < 0)
@@ -184,7 +188,7 @@ void redirectRun(char *** argv)
     *argv = (*argv) + outputRedirectIndex + 1;
   }
 
-  else if(redirectCounter = 3)
+  else if(redirectCounter == 3)
   {
     printf("Do not perform redirects more than twice\n");
     exit(0);
