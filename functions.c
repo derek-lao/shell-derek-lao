@@ -236,7 +236,6 @@ void pipeRun(char *** argv)
       }
       else
       {
-        wait();
         close(writeEnd);
         dup2(readEnd, io2);
         execute(*argv + pipeIndex + 1);
