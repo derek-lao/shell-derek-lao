@@ -18,6 +18,7 @@ Bugs:
 * Does not work when semicolons are not separated by a space from their arguments
 * Pipes does not work yet
 * cd without any following arguments does not work
+* after running ls | wc, program seems to hit "enter" one more time or something like that
   
 -------------------------------------------------
 Files & Function Headers:
