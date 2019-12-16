@@ -62,11 +62,13 @@ void execute(char * argv[])
     {
       isPipe = 1;
       pipeRun(&argv);
+      printf("pipeRun finished\n");
       break;
     }
     argIndex ++;
   }
 
+  printf("got out of the while loop\n");
   if(argv && !strcmp(argv[0], "cd"))
   {
     if(!argv[1])
@@ -79,8 +81,8 @@ void execute(char * argv[])
       chdir(argv[1]);
     }
   }
-
-  else if(!isRedirect && !isPipe);
+  printf("got past the cd conditional\n");
+  else if(argv && !isRedirect)
   {
     int child = fork();
     if(child > 0)
@@ -98,6 +100,7 @@ void execute(char * argv[])
       exit(0);
     }
   }
+  printf("end of first execute call\n");
 }
 
 void redirectRun(char *** argv)
@@ -207,17 +210,23 @@ void pipeRun(char *** argv)
   {
     if(!strcmp((*argv)[argIndex], "|"))
     {
+      printf("here!\n");
       pipeIndex = argIndex;
       (*argv)[pipeIndex] = NULL;
+      printf("pipe about to open\n");
       FILE * outstream = popen((*argv)[0], "w");
-      *argv = (*argv) + pipeIndex + 1;
+      printf("pipe opened\n"); 
+     *argv = (*argv) + pipeIndex + 1;
       argIndex = 0;
+      printf("argv magic finished\n");
       // if((*argv)[0])
       // {
       //   FILE * instream = popen((*argv)[0], "r");
       //   pclose(instream);
       // }
+      printf("about to close the pipe\n");
       pclose(outstream);
+      printf("pipe closed\n");
     }
     argIndex ++;
   }
