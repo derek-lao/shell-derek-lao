@@ -105,6 +105,7 @@ void redirectRun(char *** argv)
     if(!strcmp((*argv)[argIndex], "<"))
     {
       inputRedirectIndex = argIndex;
+      printf("inputRedirectIndex: %d\n", inputRedirectIndex);
       redirectCounter ++;
     }
     if(!strcmp((*argv)[argIndex], ">"))
@@ -124,15 +125,21 @@ void redirectRun(char *** argv)
       {
         // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
         printf("failed somehow: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
+        printf("inputRedirectIndex in fail condition: %d\n", inputRedirectIndex);
+        printf("(*argv)[inputRedirectIndex]: %s\n", (*argv)[inputRedirectIndex]);
+        printf("(*argv)[inputRedirectIndex + 1]: %s\n", (*argv)[inputRedirectIndex + 1]);
       }
-      int io = STDIN_FILENO;
-      int temp = dup(io);//makes temp STDIN_FILENO;
-      dup2(fileDescriptor, io);
-      (*argv)[inputRedirectIndex] = NULL;
-      execute(*argv);
-      close(fileDescriptor);
-      dup2(temp, io);//make input output back into STDIN_FILENO
-      *argv = (*argv) + inputRedirectIndex + 1;
+      else //if fileDescriptor is greater than or equal to 0, meaning file exists
+      {
+        int io = STDIN_FILENO;
+        int temp = dup(io);//makes temp STDIN_FILENO;
+        dup2(fileDescriptor, io);
+        (*argv)[inputRedirectIndex] = NULL;
+        execute(*argv);
+        close(fileDescriptor);
+        dup2(temp, io);//make input output back into STDIN_FILENO
+        *argv = (*argv) + inputRedirectIndex + 1;
+      }
     }
     else if(outputRedirectIndex < 100)
     {
@@ -159,26 +166,28 @@ void redirectRun(char *** argv)
     if(fileDescriptor1 < 0)
     {
       // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
-      printf("-bash: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
-      exit(0);
+      printf("failed!!: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
     }
-    int fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
-    if(fileDescriptor2 < 0)
+    else//if filedescriptor1 is greater than or equal to 0;
     {
-      fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR);
+      int fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+      if(fileDescriptor2 < 0)
+      {
+        fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR);
+      }
+      int io1 = STDOUT_FILENO;
+      int io2 = STDIN_FILENO;
+      int temp1 = dup(io1);
+      int temp2 = dup(io2);
+      (*argv)[inputRedirectIndex] = NULL;
+      (*argv)[outputRedirectIndex] = NULL;
+      execute(*argv);
+      close(fileDescriptor1);
+      close(fileDescriptor2);
+      dup2(fileDescriptor1, io1);
+      dup2(fileDescriptor2, io2);
+      *argv = (*argv) + outputRedirectIndex + 1;
     }
-    int io1 = STDOUT_FILENO;
-    int io2 = STDIN_FILENO;
-    int temp1 = dup(io1);
-    int temp2 = dup(io2);
-    (*argv)[inputRedirectIndex] = NULL;
-    (*argv)[outputRedirectIndex] = NULL;
-    execute(*argv);
-    close(fileDescriptor1);
-    close(fileDescriptor2);
-    dup2(fileDescriptor1, io1);
-    dup2(fileDescriptor2, io2);
-    *argv = (*argv) + outputRedirectIndex + 1;
   }
 
   else if(redirectCounter == 3)
