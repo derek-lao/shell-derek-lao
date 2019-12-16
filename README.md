@@ -21,9 +21,7 @@ Bugs:
 -------------------------------------------------
 Files & Function Headers:
 -----------------------------------------------------------
-__functions.c__
-* Handles all functions
-
+__functions.c__ Handles all functions
 
 *char ** parse_args()*
 * Inputs:  char *line
@@ -45,5 +43,4 @@ __functions.c__
 * Checks for cd in the arguments and executes. Checks for < and > to use redirection.
 * Checks for | to use pipes. Executes arguments.
 
-__main.c__
-* The main code that keeps the shell going, takes care of "exit" code
+__main.c__ The main code that keeps the shell going, takes care of "exit" code
