@@ -47,6 +47,16 @@ char ** cmdsep(char *** arg)
 void execute(char * argv[])
 {
   int * stupidStatus;
+  int argIndex = 0;
+  while(argv[argIndex])
+  {
+    if(!strcmp(argv[argIndex], ">") || !strcmp(argv[argIndex], "<"))
+    {
+      redirect(&argv);
+    }
+    argIndex ++;
+  }
+
   if(argv && !strcmp(argv[0], "cd"))
   {
     if(!argv[1])
@@ -59,6 +69,7 @@ void execute(char * argv[])
       chdir(argv[1]);
     }
   }
+
   else
   {
     int child = fork();
@@ -68,74 +79,113 @@ void execute(char * argv[])
     }
     else if(!child)
     {
-
       execvp(argv[0], argv);
       exit(0);
     }
     else
     {
       printf("creation of a child was unsuccessful\n");
+      exit(0);
     }
   }
 }
 
-void redirect(char * argv[])
+void redirect(char *** argv)
 {
   int argIndex = 0;
   int redirectCounter = 0;
-  while(argv[argIndex])
+  int inputRedirectIndex = 1000;
+  int outputRedirectIndex = 1000;
+  //loop to count the redirects
+  while((*argv)[argIndex])
   {
-    if(!strcmp(argv[argIndex], "<"))
+    if(!strcmp((*argv)[argIndex], "<"))
     {
+      inputRedirectIndex = argIndex;
       redirectCounter ++;
     }
-    if(!strcmp(argv[argIndex], ">"))
+    if(!strcmp((*argv)[argIndex], ">"))
     {
+      outputRedirectIndex = argIndex;
       redirectCounter ++;
     }
     argIndex ++;
   }
-  argIndex = 0;
-  while(argv[argIndex])
+
+  if(redirectCounter = 1)
   {
-    if(!strcmp(argv[argIndex], "<"))
+    if(inputRedirectIndex < 100)
     {
-      redirectCounter ++;
-      int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+      int fileDescriptor = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
       if(fileDescriptor < 0)
       {
-        fileDescriptor = open(argv[argIndex + 1], O_RDWR);
+        // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
+        printf("-bash: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
+        exit(0);
       }
       int io = STDIN_FILENO;
       int temp = io;//makes temp STDIN_FILENO;
       dup2(fileDescriptor, io);
+      (*argv)[inputRedirectIndex] = NULL;
+      execute(*argv);
       close(fileDescriptor);
-      argv[argIndex] = ";";
-      argv[argIndex + 1] = argv[argIndex - 1];
-      cmdsep(&argv);
-      execute(argv);
       dup2(temp, io);//make input output back into STDIN_FILENO
+      *argv = (*argv) + inputRedirectIndex + 1;
       exit(0);
     }
-    if(!strcmp(argv[argIndex], ">"))
+    else if(outputRedirectIndex < 100)
     {
-      redirectCounter ++;
-      int fileDescriptor = open(argv[argIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+      int fileDescriptor = open((*argv)[outputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
       if(fileDescriptor < 0)
       {
-        fileDescriptor = open(argv[argIndex + 1], O_RDWR);
+        fileDescriptor = open((*argv)[outputRedirectIndex + 1], O_RDWR);
       }
       int io = STDOUT_FILENO;
       int temp = io;//makes temp STDOUT_FILENO;
       dup2(fileDescriptor, io);
+      (*argv)[outputRedirectIndex] = NULL;
+      execute(*argv);
       close(fileDescriptor);
-      argv[argIndex] = ";";//this is faulty
-      argv[argIndex + 1] = argv[argIndex - 1];
-      cmdsep(&argv);
-      execute(argv);
       dup2(temp, io);//make input output back into STDOUT_FILENO
+      *argv = (*argv) + outputRedirectIndex + 1;
       exit(0);
     }
-    argIndex ++;
   }
+
+  //multi-redirect
+  else if(redirectCounter = 2)
+  {
+    int fileDescriptor1 = open((*argv)[inputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+    if(fileDescriptor1 < 0)
+    {
+      // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
+      printf("-bash: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
+      exit(0);
+    }
+    int fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
+    if(fileDescriptor2 < 0)
+    {
+      fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR);
+    }
+    int io1 = STDOUT_FILENO;
+    int io2 = STDIN_FILENO;
+    int temp1 = io1;
+    int temp2 = io2;
+    (*argv)[inputRedirectIndex] = NULL;
+    (*argv)[outputRedirectIndex] = NULL;
+    execute(*argv);
+    close(fileDescriptor1);
+    close(fileDescriptor2);
+    dup2(fileDescriptor1, io1);
+    dup2(fileDescriptor2, io2);
+    *argv = (*argv) + outputRedirectIndex + 1;
+    exit(0);
+  }
+
+  else if(redirectCounter = 3)
+  {
+    printf("Do not perform redirects more than twice\n");
+    exit(0);
+  }
+
 }

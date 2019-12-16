@@ -1,16 +1,16 @@
-a.exe
-filesLibrary
-first.txt
-functions.c
-functions.h
-functions.o
-main.c
-main.o
-makefile
-processTesting.c
-README.md
-second.txt
-shelltest
-shelltest.exe
-third.txt
-wholist
+      PID    PPID    PGID     WINPID   TTY         UID    STIME COMMAND
+     5536    5528    5527      56404  pty0      197609 16:27:03 /usr/bin/ps
+     5527    1057    5527      58992  pty0      197609 16:26:42 /usr/bin/make
+     5528    5527    5527      53464  pty0      197609 16:26:42 /home/durick/SystemLevelProgramming/shell-derek-lao/shelltest
+     1056       1    1056      19988  ?         197609   Dec 11 /usr/bin/mintty
+     1057    1056    1057      23384  pty0      197609   Dec 11 /usr/bin/bash
+      PID    PPID    PGID     WINPID   TTY         UID    STIME COMMAND
+     5527    1057    5527      58992  pty0      197609 16:26:42 /usr/bin/make
+     5528    5527    5527      53464  pty0      197609 16:26:42 /home/durick/SystemLevelProgramming/shell-derek-lao/shelltest
+     1056       1    1056      19988  ?         197609   Dec 11 /usr/bin/mintty
+     5537    5528    5527      20076  pty0      197609 16:27:04 /usr/bin/ps
+     1057    1056    1057      23384  pty0      197609   Dec 11 /usr/bin/bash
+
+/home/durick/SystemLevelProgramming/shell-derek-lao
+
+/home/durick/SystemLevelProgramming/shell-derek-lao
