@@ -17,12 +17,11 @@ Bugs:
   
   
 Files & Function Headers:
-
-=======================================================================================
+-----------------------------------------------------------
 functions.c
 Handles all functions
 
------------------------------------------------------------
+
 char ** parse_args()
 Inputs:  char *line
 Returns: Array of arguments (in the form of strings) parsed from line.
