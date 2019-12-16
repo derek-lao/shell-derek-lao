@@ -19,6 +19,12 @@ Bugs:
 * Pipes does not work yet
 * cd without any following arguments does not work
 * after running ls | wc, program seems to hit "enter" one more time or something like that
+
+---------------------------------------------------
+Extra Features (kind of):
+---------------------------------------------------
+* Pipes will run for multiple pipes!
+* If you ask to input redirect from a nonexistent file, will return an error message very similar to an error message bash will return
   
 -------------------------------------------------
 Files & Function Headers:
@@ -51,5 +57,12 @@ __functions.c__ Handles all functions
 * Returns: n/a
 
 * When called, will perform redirection, run, and redirect back to stdin and stdout
+
+*void pipeRun(char *** argv);*
+* Inputs: char *** argv
+* Returns: n/a
+
+* When called, will create a pipe and run, and then redirect back to stdin and stdout.
+* Will run for multiple pipes!
 
 __main.c__ The main code that keeps the shell going, takes care of "exit" code
