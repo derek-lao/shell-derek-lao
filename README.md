@@ -17,30 +17,34 @@ Bugs:
   
   
 Files & Function Headers:
+
+=======================================================================================
 functions.c
-	Handles all functions
-	/*======== char ** parse_args() ==========
-	Inputs:  char *line
-	Returns: Array of arguments (in the form of strings) parsed from line.
-	====================*/
+Handles all functions
+
+-----------------------------------------------------------
+char ** parse_args()
+Inputs:  char *line
+Returns: Array of arguments (in the form of strings) parsed from line.
 
 
-	/*======== char ** cmdsep() ==========
-	Inputs:  char *** arg 
-	Returns: The beginning of the array of arguments pointed to by arg
 
-	Takes in a pointer (arg) to an array of arguments (each argument a string).
-  	Finds the first occurence of the argument ";", replaces it with a NULL.
- 	 Arg points to the memory one index after the NULL that was just created.
-	====================*/
+/*======== char ** cmdsep() ==========
+Inputs:  char *** arg 
+Returns: The beginning of the array of arguments pointed to by arg
 
-	/*======== void execute() ==========
-	Inputs:  char * argv[] 
-	Returns: n/a
+Takes in a pointer (arg) to an array of arguments (each argument a string).
+Finds the first occurence of the argument ";", replaces it with a NULL.
+ Arg points to the memory one index after the NULL that was just created.
+====================*/
 
-	Checks for cd in the arguments and executes. Checks for < and > to use redirection.
- 	Checks for | to use pipes. Executes arguments.
-	====================*/
+/*======== void execute() ==========
+Inputs:  char * argv[] 
+Returns: n/a
+
+Checks for cd in the arguments and executes. Checks for < and > to use redirection.
+Checks for | to use pipes. Executes arguments.
+====================*/
 
 main.c
-	The main code that keeps the shell going, takes care of "exit" code
+The main code that keeps the shell going, takes care of "exit" code
