@@ -1,4 +1,15 @@
- 00:18:05 up 5 days,  7:24,  2 users,  load average: 0.14, 0.22, 0.26
+after dup2, we should be inside the file now
+inputRedirectIndex is: 3
+outputRedirectIndex is: 5
+just set inputRedirectIndex and outputRedirectIndex to null
+execute called
+ 00:18:05 UP 5 DAYS,  7:24,  2 USERS,  LOAD AVERAGE: 0.14, 0.22, 0.26
 USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-dlao00   pts/0    173.52.245.136   20:03    5.00s  0.16s  0.00s w
-twu00    pts/2    67.245.88.86     22:14    2:03m  0.06s  0.06s -bash
+DLAO00   PTS/0    173.52.245.136   20:03    5.00S  0.16S  0.00S W
+TWU00    PTS/2    67.245.88.86     22:14    2:03M  0.06S  0.06S -BASH
+
+
+
+function just executed! (three new line characters before this line)
+file descriptors are back
+about to dup2 back to stdin and stdout, it was fun, goodbye!
