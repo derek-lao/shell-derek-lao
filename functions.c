@@ -49,12 +49,19 @@ void execute(char * argv[])
   int * stupidStatus;
   int argIndex = 0;
   int isRedirect = 0;
+  int isPipe = 0;
   while(argv[argIndex])
   {
     if(!strcmp(argv[argIndex], ">") || !strcmp(argv[argIndex], "<"))
     {
       isRedirect = 1;
       redirectRun(&argv);
+      break;
+    }
+    if(!strcmp(argv[argIndex]), "|")
+    {
+      isPipe = 1;
+      pipeRun(&argv);
       break;
     }
     argIndex ++;
@@ -73,7 +80,7 @@ void execute(char * argv[])
     }
   }
 
-  else if(!isRedirect);
+  else if(!isRedirect && !isPipe);
   {
     int child = fork();
     if(child > 0)
@@ -185,11 +192,30 @@ void redirectRun(char *** argv)
       *argv = (*argv) + outputRedirectIndex + 1;
     }
   }
-
   else if(redirectCounter == 3)
   {
     printf("Do not perform redirects more than twice\n");
     exit(0);
   }
+}
 
+void pipeRun(char *** argv)
+{
+  int pipeIndex = 0;
+  while((*argv)[argIndex])
+  {
+    if(!strcmp((*argv)[argIndex], "|"))
+    {
+      pipeIndex = argIndex;
+      (*argv)[pipeIndex] = NULL;
+      FILE * outstream = popen((*argv)[0], "w");
+      *argv = (*argv) + pipeIndex + 1;
+      argIndex = 0;
+      if((*argv)[0])
+      {
+        FILE * instream = popen((*argv)[0], "r");
+      }
+    }
+    argIndex ++;
+  }
 }
