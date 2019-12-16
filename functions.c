@@ -46,6 +46,7 @@ char ** cmdsep(char *** arg)
 
 void execute(char * argv[])
 {
+  printf("execute called\n");
   int * stupidStatus;
   int argIndex = 0;
   while(argv[argIndex])
@@ -53,6 +54,7 @@ void execute(char * argv[])
     if(!strcmp(argv[argIndex], ">") || !strcmp(argv[argIndex], "<"))
     {
       redirect(&argv);
+      break;
     }
     argIndex ++;
   }
@@ -127,11 +129,10 @@ void redirect(char *** argv)
       int temp = io;//makes temp STDIN_FILENO;
       dup2(fileDescriptor, io);
       (*argv)[inputRedirectIndex] = NULL;
-      execute(*argv);
+      execvp((*argv)[0], *argv);
       close(fileDescriptor);
       dup2(temp, io);//make input output back into STDIN_FILENO
       *argv = (*argv) + inputRedirectIndex + 1;
-      exit(0);
     }
     else if(outputRedirectIndex < 100)
     {
@@ -145,10 +146,10 @@ void redirect(char *** argv)
       dup2(fileDescriptor, io);
       (*argv)[outputRedirectIndex] = NULL;
       execute(*argv);
+      printf("1\n");
       close(fileDescriptor);
       dup2(temp, io);//make input output back into STDOUT_FILENO
       *argv = (*argv) + outputRedirectIndex + 1;
-      exit(0);
     }
   }
 
@@ -179,7 +180,6 @@ void redirect(char *** argv)
     dup2(fileDescriptor1, io1);
     dup2(fileDescriptor2, io2);
     *argv = (*argv) + outputRedirectIndex + 1;
-    exit(0);
   }
 
   else if(redirectCounter = 3)

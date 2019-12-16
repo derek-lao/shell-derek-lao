@@ -8,7 +8,7 @@ main.o: main.c functions.h
 	gcc -c main.c
 
 run:
-	./shelltest.exe
+	./shelltest
 
 clean:
 	rm *.o

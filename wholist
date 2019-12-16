@@ -1,3 +1,9 @@
- 01:21:13 up 4 days,  8:27,  1 user,  load average: 1.96, 2.00, 2.00
+ 23:11:13 up 5 days,  6:17,  6 users,  load average: 0.05, 0.03, 0.00
 USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
-dlao00   pts/0    173.52.245.136   21:12    0.00s  0.23s  0.00s ./shelltest
+dlao00   pts/0    173.52.245.136   20:03    0.00s  0.07s  0.00s w
+rleong00 pts/1    100.2.11.139     21:29    1:41m  0.06s  0.06s -bash
+twu00    pts/2    67.245.88.86     22:14   56:33   0.06s  0.06s -bash
+zli10    pts/3    98.116.137.195   23:11    1.00s  0.06s  0.06s -bash
+mzhang00 pts/5    98.14.166.56     22:49    1:05   0.44s  0.23s vim main.c
+bwang00  pts/6    68.174.87.80     22:53   12:09   0.09s  0.09s -bash
+1
