@@ -18,10 +18,10 @@ Bugs:
 * Pipes does not work yet
 * cd without any following arguments does not work
   
-  
+-------------------------------------------------
 Files & Function Headers:
 -----------------------------------------------------------
-*functions.c*
+_functions.c_
 * Handles all functions
 *
 *
@@ -38,15 +38,13 @@ Files & Function Headers:
 * Takes in a pointer (arg) to an array of arguments (each argument a string).
 * Finds the first occurence of the argument ";", replaces it with a NULL.
 * Arg points to the memory one index after the NULL that was just created.
-====================*/
 
-/*======== void execute() ==========
-Inputs:  char * argv[] 
-Returns: n/a
+*void execute()*
+* Inputs:  char * argv[] 
+* Returns: n/a
+* 
+* Checks for cd in the arguments and executes. Checks for < and > to use redirection.
+* Checks for | to use pipes. Executes arguments.
 
-Checks for cd in the arguments and executes. Checks for < and > to use redirection.
-Checks for | to use pipes. Executes arguments.
-====================*/
-
-main.c
-The main code that keeps the shell going, takes care of "exit" code
+_main.c_
+* The main code that keeps the shell going, takes care of "exit" code
