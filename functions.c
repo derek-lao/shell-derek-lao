@@ -62,13 +62,13 @@ void execute(char * argv[])
     {
       isPipe = 1;
       pipeRun(&argv);
-      printf("pipeRun finished\n");
+      // printf("pipeRun finished\n");
       break;
     }
     argIndex ++;
   }
 
-  printf("got out of the while loop\n");
+  // printf("got out of the while loop\n");
   if(argv && !strcmp(argv[0], "cd"))
   {
     if(!argv[1])
@@ -81,9 +81,9 @@ void execute(char * argv[])
       chdir(argv[1]);
     }
   }
-  printf("got past the cd conditional\n");
-  else if(argv && !isRedirect)
+  else if(!isRedirect && !isPipe)
   {
+    // printf("got past the cd conditional\n");
     int child = fork();
     if(child > 0)
     {
@@ -91,6 +91,8 @@ void execute(char * argv[])
     }
     else if(!child)
     {
+      // printf("got up to here!!!!!\n");
+      // printf("argv[0] is %s\n", argv[0]);
       execvp(argv[0], argv);
       exit(0);
     }
@@ -99,8 +101,9 @@ void execute(char * argv[])
       printf("creation of a child was unsuccessful\n");
       exit(0);
     }
+    // printf("got up to here!!\n");
   }
-  printf("end of first execute call\n");
+  // printf("end of first execute call\n");
 }
 
 void redirectRun(char *** argv)
@@ -210,24 +213,56 @@ void pipeRun(char *** argv)
   {
     if(!strcmp((*argv)[argIndex], "|"))
     {
-      printf("here!\n");
       pipeIndex = argIndex;
       (*argv)[pipeIndex] = NULL;
-      printf("pipe about to open\n");
-      FILE * outstream = popen((*argv)[0], "w");
-      printf("pipe opened\n"); 
-     *argv = (*argv) + pipeIndex + 1;
+      int pid;
+      int ends[2];
+      pipe(ends);
+      int io1 = STDOUT_FILENO;
+      int io2 = STDIN_FILENO;
+      int readEnd = ends[0];
+      int writeEnd = ends[1];
+      int temp1 = dup(io1);
+      int temp2 = dup(io2);
+      pid = fork();
+      if(!pid)
+      {
+        close(readEnd);
+        dup2(writeEnd, io1);
+        execute(*argv);
+        dup2(temp1, io1);
+        close(temp1);
+        close(writeEnd);
+      }
+      else
+      {
+        close(writeEnd);
+        dup2(readEnd, io2);
+        execute(*argv + pipeIndex + 1);
+        dup2(temp2, io2);
+        close(temp2);
+        close(readEnd);
+      }
       argIndex = 0;
-      printf("argv magic finished\n");
-      // if((*argv)[0])
-      // {
-      //   FILE * instream = popen((*argv)[0], "r");
-      //   pclose(instream);
-      // }
-      printf("about to close the pipe\n");
-      pclose(outstream);
-      printf("pipe closed\n");
     }
     argIndex ++;
   }
+  //     printf("pipe about to open\n");
+  //     FILE * outstream = popen((*argv)[0], "w");
+  //     printf("pipe opened\n");
+  //     *argv = (*argv) + pipeIndex + 1;
+  //     argIndex = 0;
+  //     printf("argv magic finished\n");
+  //     pclose(outstream);
+  //     if((*argv)[0])
+  //     {
+  //       printf("(*argv)[0] is %s\n", (*argv)[0]);
+  //       FILE * instream = popen((*argv)[0], "r");
+  //       printf("we never finish, do we?\n");
+  //       pclose(instream);
+  //       printf("we do??\n");
+  //     }
+  //   }
+  //   argIndex ++;
+  // }
 }
