@@ -123,8 +123,7 @@ void redirectRun(char *** argv)
       if(fileDescriptor < 0)
       {
         // fileDescriptor = open(argv[inputRedirectIndex + 1], O_RDWR);
-        printf("-bash: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
-        exit(0);
+        printf("failed somehow: %s: No such file or directory\n\n", (*argv)[inputRedirectIndex + 1]);
       }
       int io = STDIN_FILENO;
       int temp = dup(io);//makes temp STDIN_FILENO;

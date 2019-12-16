@@ -1,13 +1,4 @@
-filesLibrary
-first.txt
-functions.c
-functions.h
-functions.o
-main.c
-main.o
-makefile
-processTesting.c
-README.md
-second.txt
-shelltest
-third.txt
+ 00:03:15 up 5 days,  7:09,  2 users,  load average: 0.35, 0.32, 0.15
+USER     TTY      FROM             LOGIN@   IDLE   JCPU   PCPU WHAT
+dlao00   pts/0    173.52.245.136   20:03    0.00s  0.16s  0.00s w
+twu00    pts/2    67.245.88.86     22:14    1:48m  0.06s  0.06s -bash
