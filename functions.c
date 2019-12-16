@@ -49,10 +49,12 @@ void execute(char * argv[])
   printf("execute called\n");
   int * stupidStatus;
   int argIndex = 0;
+  int isRedirect = 0;
   while(argv[argIndex])
   {
     if(!strcmp(argv[argIndex], ">") || !strcmp(argv[argIndex], "<"))
     {
+      isRedirect = 1;
       redirect(&argv);
       break;
     }
@@ -72,7 +74,7 @@ void execute(char * argv[])
     }
   }
 
-  else
+  else if(!isRedirect);
   {
     int child = fork();
     if(child > 0)
@@ -129,7 +131,7 @@ void redirect(char *** argv)
       int temp = io;//makes temp STDIN_FILENO;
       dup2(fileDescriptor, io);
       (*argv)[inputRedirectIndex] = NULL;
-      execvp((*argv)[0], *argv);
+      execute(*argv);
       close(fileDescriptor);
       dup2(temp, io);//make input output back into STDIN_FILENO
       *argv = (*argv) + inputRedirectIndex + 1;
