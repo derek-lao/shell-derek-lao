@@ -105,7 +105,6 @@ void redirectRun(char *** argv)
     if(!strcmp((*argv)[argIndex], "<"))
     {
       inputRedirectIndex = argIndex;
-      printf("inputRedirectIndex: %d\n", inputRedirectIndex);
       redirectCounter ++;
     }
     if(!strcmp((*argv)[argIndex], ">"))
