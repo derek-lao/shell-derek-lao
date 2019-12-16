@@ -46,7 +46,6 @@ char ** cmdsep(char *** arg)
 
 void execute(char * argv[])
 {
-  printf("execute called\n");
   int * stupidStatus;
   int argIndex = 0;
   int isRedirect = 0;
@@ -96,7 +95,6 @@ void execute(char * argv[])
 
 void redirectRun(char *** argv)
 {
-  printf("redirectRun called\n");
   int argIndex = 0;
   int redirectCounter = 0;
   int inputRedirectIndex = 1000;
@@ -159,7 +157,6 @@ void redirectRun(char *** argv)
   //multi-redirect
   else if(redirectCounter == 2)
   {
-    printf("inside conditional for if(redirectCounter == 2)\n");
     int fileDescriptor1 = open((*argv)[inputRedirectIndex + 1], O_RDWR, 0644);
     if(fileDescriptor1 < 0)
     {
@@ -167,35 +164,24 @@ void redirectRun(char *** argv)
     }
     else//if filedescriptor1 is greater than or equal to 0;
     {
-      printf("inside after the check for if(fileDescriptor1 < 0)\n");
       int fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR | O_EXCL | O_CREAT, 0644);
       if(fileDescriptor2 < 0)
       {
         fileDescriptor2 = open((*argv)[outputRedirectIndex + 1], O_RDWR);
       }
-      printf("after fileDescriptor2 opening\n");
       int io1 = STDOUT_FILENO;
       int io2 = STDIN_FILENO;
       int temp1 = dup(io1);
       int temp2 = dup(io2);
-      printf("after temp1 and temp2 duping\n");
       dup2(fileDescriptor1, io1);
       dup2(fileDescriptor2, io2);
-      printf("after dup2, we should be inside the file now\n");
       (*argv)[inputRedirectIndex] = NULL;
       (*argv)[outputRedirectIndex] = NULL;
-      printf("inputRedirectIndex is: %d\n", inputRedirectIndex);
-      printf("outputRedirectIndex is: %d\n", outputRedirectIndex);
-      printf("just set inputRedirectIndex and outputRedirectIndex to null\n");
       execute(*argv);
-      printf("\n\n\nfunction just executed! (three new line characters before this line)\n");
       close(fileDescriptor1);
       close(fileDescriptor2);
-      printf("file descriptors are back\n");
-      printf("about to dup2 back to stdin and stdout, it was fun, goodbye!\n");
       dup2(temp1, io1);
       dup2(temp2, io2);
-      printf("finished duping back to standard input and output\n");
       *argv = (*argv) + outputRedirectIndex + 1;
     }
   }
