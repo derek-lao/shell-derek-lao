@@ -58,7 +58,7 @@ void execute(char * argv[])
       redirectRun(&argv);
       break;
     }
-    if(!strcmp(argv[argIndex]), "|")
+    if(!strcmp(argv[argIndex], "|"))
     {
       isPipe = 1;
       pipeRun(&argv);
@@ -202,6 +202,7 @@ void redirectRun(char *** argv)
 void pipeRun(char *** argv)
 {
   int pipeIndex = 0;
+  int argIndex = 0;
   while((*argv)[argIndex])
   {
     if(!strcmp((*argv)[argIndex], "|"))
@@ -211,10 +212,12 @@ void pipeRun(char *** argv)
       FILE * outstream = popen((*argv)[0], "w");
       *argv = (*argv) + pipeIndex + 1;
       argIndex = 0;
-      if((*argv)[0])
-      {
-        FILE * instream = popen((*argv)[0], "r");
-      }
+      // if((*argv)[0])
+      // {
+      //   FILE * instream = popen((*argv)[0], "r");
+      //   pclose(instream);
+      // }
+      pclose(outstream);
     }
     argIndex ++;
   }

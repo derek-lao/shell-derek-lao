@@ -16,3 +16,5 @@ void execute(char * argv[]);
 //The parent process should wait until the exec'd program exits and then it should read the next command.
 
 void redirectRun(char *** argv);
+
+void pipeRun(char *** argv);
