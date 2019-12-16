@@ -133,7 +133,7 @@ void redirectRun(char *** argv)
         exit(0);
       }
       int io = STDIN_FILENO;
-      int temp = io;//makes temp STDIN_FILENO;
+      int temp = dup(io);//makes temp STDIN_FILENO;
       dup2(fileDescriptor, io);
       (*argv)[inputRedirectIndex] = NULL;
       execute(*argv);
@@ -149,15 +149,18 @@ void redirectRun(char *** argv)
       {
         fileDescriptor = open((*argv)[outputRedirectIndex + 1], O_RDWR);
       }
+      printf("1\n");
       int io = STDOUT_FILENO;
-      int temp = io;//makes temp STDOUT_FILENO;
+      int temp = dup(io);//makes temp STDOUT_FILENO;
       dup2(fileDescriptor, io);
+      printf("2\n");
       (*argv)[outputRedirectIndex] = NULL;
       execute(*argv);
-      printf("1\n");
+      printf("3\n");
       close(fileDescriptor);
       dup2(temp, io);//make input output back into STDOUT_FILENO
       *argv = (*argv) + outputRedirectIndex + 1;
+      printf("got to the end\n");
     }
   }
 
@@ -179,8 +182,8 @@ void redirectRun(char *** argv)
     }
     int io1 = STDOUT_FILENO;
     int io2 = STDIN_FILENO;
-    int temp1 = io1;
-    int temp2 = io2;
+    int temp1 = dup(io1);
+    int temp2 = dup(io2);
     (*argv)[inputRedirectIndex] = NULL;
     (*argv)[outputRedirectIndex] = NULL;
     execute(*argv);
