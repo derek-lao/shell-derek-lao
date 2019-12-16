@@ -18,17 +18,17 @@ Bugs:
   
 Files & Function Headers:
 -----------------------------------------------------------
-functions.c
+*functions.c*
 Handles all functions
 
 
-char ** parse_args()
+*char ** parse_args()*
 Inputs:  char *line
 Returns: Array of arguments (in the form of strings) parsed from line.
 
 
 
-/*======== char ** cmdsep() ==========
+*char ** cmdsep()*
 Inputs:  char *** arg 
 Returns: The beginning of the array of arguments pointed to by arg
 
