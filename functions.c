@@ -55,7 +55,7 @@ void execute(char * argv[])
     if(!strcmp(argv[argIndex], ">") || !strcmp(argv[argIndex], "<"))
     {
       isRedirect = 1;
-      redirect(&argv);
+      redirectRun(&argv);
       break;
     }
     argIndex ++;
@@ -94,7 +94,7 @@ void execute(char * argv[])
   }
 }
 
-void redirect(char *** argv)
+void redirectRun(char *** argv)
 {
   int argIndex = 0;
   int redirectCounter = 0;
